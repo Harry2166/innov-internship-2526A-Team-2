@@ -45,7 +45,7 @@ function checkGuess() {
 
     let guess = currentGuess.join('');
     if (!WORDS.includes(guess)) {
-        alert('Not an English word!')
+        alert('Not an English word!');
         return;
     }
 
