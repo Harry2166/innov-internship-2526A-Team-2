@@ -56,7 +56,7 @@ function checkGuess() {
         return;
     }
 
-     if (!WORDS.includes(guessString)) {
+    if (!WORDS.includes(guessString)) {
         alert('Not an English word!');
         return;
     }
