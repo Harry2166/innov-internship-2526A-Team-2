@@ -58,7 +58,7 @@ function checkGuess() {
     }
 
     const colors = Array(WORD_LENGTH).fill('grey');
-    
+
     // count frequency of each letter
     const freq = {};
     for (const letter of rightGuess) {
@@ -91,7 +91,7 @@ function checkGuess() {
         const box = row.children[i];
         const letter = currentGuess[i];
         const letterColor = colors[i];
-        
+
         const delay = 50 * i;
         setTimeout(() => {
             box.style.backgroundColor = letterColor;
