@@ -36,6 +36,10 @@ function shadeKeyBoard(letter, color) {
 function deleteLetter() {
     currentGuess.pop();
     nextLetter -= 1;
+    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
+    const box = row.children[nextLetter];
+    box.textContent = '';
+    box.classList.remove('filled-box');
 }
 
 function checkGuess() {
