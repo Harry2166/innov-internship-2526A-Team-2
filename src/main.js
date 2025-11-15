@@ -44,7 +44,7 @@ function deleteLetter() {
 
 function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
-    let guessString = currentGuess.join('');
+    const guessString = currentGuess.join('');
     const rightGuess = Array.from(rightGuessString);
 
     if (guessString.length !== WORD_LENGTH) {
