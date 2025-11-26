@@ -5,6 +5,7 @@ const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
+let gameOver = false;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
 function initBoard() {
@@ -84,13 +85,11 @@ function checkGuess() {
         }, delay);
     }
 
-    if (guessString === rightGuessString) {
-        if (guessesRemaining === 1) {
-            guessesRemaining = 0;
-        } else {
-            alert('You guessed right! Game over!');
-            return;
-        }
+    if (guessString === rightGuessString && guessesRemaining > 0) {
+        guessesRemaining -= 1;
+        gameOver = true;
+        alert('You guessed right! Game over!');
+        return;
     }
 
     guessesRemaining -= 1;
@@ -98,6 +97,7 @@ function checkGuess() {
     nextLetter = 0;
 
     if (guessesRemaining <= 0) {
+        gameOver = true;
         alert("You've run out of guesses! Game over!");
         alert(`The right word was: "${rightGuessString}"`);
     }
@@ -118,7 +118,7 @@ function insertLetter(pressedKey) {
 }
 
 document.addEventListener('keyup', e => {
-    if (guessesRemaining === 0) {
+    if (gameOver || guessesRemaining <= 0) {
         return;
     }
 
