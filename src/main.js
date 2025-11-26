@@ -45,38 +45,53 @@ function deleteLetter() {
 
 function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
-    let guessString = '';
+    const guessString = currentGuess.join('');
     const rightGuess = Array.from(rightGuessString);
-
-    const guess = currentGuess.join('');
-    if (!WORDS.includes(guess)) {
-        alert('Not an English word!');
-        return;
-    }
-
-    for (const val of currentGuess) {
-        guessString += val;
-    }
 
     if (guessString.length !== WORD_LENGTH) {
         alert('Not enough letters!');
         return;
     }
 
+    if (!WORDS.includes(guessString)) {
+        alert('Not an English word!');
+        return;
+    }
+
+    const colors = Array(WORD_LENGTH).fill('grey');
+
+    // count frequency of each letter
+    const freq = {};
+    for (const letter of rightGuess) {
+        if (freq[letter]) {
+            freq[letter] += 1;
+        } else {
+            freq[letter] = 1;
+        }
+    }
+
+    // mark greens first
     for (let i = 0; i < WORD_LENGTH; i++) {
-        let letterColor = '';
-        const box = row.children[i];
+        if (currentGuess[i] === rightGuess[i]) {
+            colors[i] = 'green';
+            freq[currentGuess[i]] -= 1;
+        }
+    }
+
+    // mark yellows next, considering freq
+    for (let i = 0; i < WORD_LENGTH; i++) {
         const letter = currentGuess[i];
 
-        const letterPosition = rightGuess.indexOf(currentGuess[i]);
-        // is letter in the correct guess
-        if (letterPosition === -1) {
-            letterColor = 'grey';
-        } else if (currentGuess[i] === rightGuess[i]) {
-            letterColor = 'green';
-        } else {
-            letterColor = 'yellow';
+        if (colors[i] === 'grey' && freq[letter] > 0) {
+            colors[i] = 'yellow';
+            freq[letter] -= 1;
         }
+    }
+
+    for (let i = 0; i < WORD_LENGTH; i++) {
+        const box = row.children[i];
+        const letter = currentGuess[i];
+        const letterColor = colors[i];
 
         const delay = 50 * i;
         setTimeout(() => {
