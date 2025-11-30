@@ -118,6 +118,33 @@ function checkGuess() {
     }
 }
 
+function removeCurrentGuess() {
+    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
+    const colors = Array(WORD_LENGTH).fill('grey');
+
+    for (let i = 0; i < WORD_LENGTH; i++) {
+        const box = row.children[i];
+        const letterColor = colors[i];
+
+        const delay = 50 * i;
+        setTimeout(() => {
+            box.style.backgroundColor = letterColor;
+            box.classList.add('filled-box');
+            shadeKeyBoard('', letterColor);
+        }, delay);
+    }
+
+    guessesRemaining -= 1;
+    currentGuess = [];
+    nextLetter = 0;
+
+    if (guessesRemaining <= 0) {
+        gameOver = true;
+        alert("You've run out of guesses! Game over!");
+        alert(`The right word was: "${rightGuessString}"`);
+    }
+}
+
 function insertLetter(pressedKey) {
     if (nextLetter === WORD_LENGTH) {
         return;
