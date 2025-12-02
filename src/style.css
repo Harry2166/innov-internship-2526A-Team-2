@@ -25,3 +25,10 @@
 }
 
 /* ADD NEW CLASS STYLES BELOW */
+
+#hint-cont {
+    @apply flex justify-center;
+}
+#hint-button {
+    @apply cursor-pointer underline;
+}
