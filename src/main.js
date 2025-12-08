@@ -9,7 +9,7 @@ let nextLetter = 0;
 let gameOver = false;
 
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-let allGuessedLetters = new Set();
+const allGuessedLetters = new Set();
 
 const showHintGuessCount = 3;
 let isHintPressed = false;
@@ -48,21 +48,21 @@ function deleteLetter() {
     const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
     const box = row.children[nextLetter];
 
-    box.textContent = "";
-    box.classList.remove("filled-box");
+    box.textContent = '';
+    box.classList.remove('filled-box');
 }
 
 function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
-    const guessString = currentGuess.join("");
+    const guessString = currentGuess.join('');
 
     if (guessString.length !== WORD_LENGTH) {
-        alert("Not enough letters!");
+        alert('Not enough letters!');
         return;
     }
 
     if (!WORDS.includes(guessString)) {
-        alert("Not an English word!");
+        alert('Not an English word!');
         return;
     }
 
@@ -71,7 +71,7 @@ function checkGuess() {
     }
 
     const rightGuess = Array.from(rightGuessString);
-    const colors = Array(WORD_LENGTH).fill("grey");
+    const colors = Array(WORD_LENGTH).fill('grey');
 
     const freq = {};
     for (const c of rightGuess) {
@@ -80,16 +80,16 @@ function checkGuess() {
 
     for (let i = 0; i < WORD_LENGTH; i++) {
         if (currentGuess[i] === rightGuess[i]) {
-            colors[i] = "green";
+            colors[i] = 'green';
             freq[currentGuess[i]]--;
         }
     }
 
     for (let i = 0; i < WORD_LENGTH; i++) {
-        if (colors[i] !== "grey") continue;
+        if (colors[i] !== 'grey') continue;
         const ch = currentGuess[i];
         if (freq[ch] > 0) {
-            colors[i] = "yellow";
+            colors[i] = 'yellow';
             freq[ch]--;
         }
     }
@@ -108,7 +108,7 @@ function checkGuess() {
     if (guessString === rightGuessString) {
         gameOver = true;
         guessesRemaining--;
-        alert("You guessed right! Game over!");
+        alert('You guessed right! Game over!');
         return;
     }
 
@@ -131,9 +131,9 @@ function removeCurrentGuessRow() {
 
     for (let i = 0; i < WORD_LENGTH; i++) {
         const box = row.children[i];
-        box.textContent = "";
-        box.style.backgroundColor = "grey";
-        box.classList.add("filled-box");
+        box.textContent = '';
+        box.style.backgroundColor = 'grey';
+        box.classList.add('filled-box');
     }
 
     guessesRemaining--;
@@ -153,7 +153,7 @@ function insertLetter(k) {
     const box = row.children[nextLetter];
 
     box.textContent = k;
-    box.classList.add("filled-box");
+    box.classList.add('filled-box');
 
     currentGuess.push(k);
     nextLetter++;
@@ -179,19 +179,19 @@ function generateHint() {
 }
 
 function showHintButton() {
-    const btn = document.getElementById("hint-button");
-    btn.classList.remove("hidden");
+    const btn = document.getElementById('hint-button');
+    btn.classList.remove('hidden');
     const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
 
-    newBtn.addEventListener("click", () => {
+    newBtn.addEventListener('click', () => {
         if (isHintPressed) {
-            alert("You already used your hint!");
+            alert('You already used your hint!');
             return;
         }
 
         if (guessesRemaining === 1) {
-            alert("Using a hint now will make you LOSE.\nProceed?");
+            alert('Using a hint now will make you LOSE.\nProceed?');
         }
 
         const hint = generateHint();
@@ -200,20 +200,20 @@ function showHintButton() {
         isHintPressed = true;
         removeCurrentGuessRow();
 
-        newBtn.classList.add("hidden");
+        newBtn.classList.add('hidden');
     });
 }
 
-document.addEventListener("keyup", e => {
+document.addEventListener('keyup', e => {
     if (gameOver) return;
 
     const key = e.key;
 
-    if (key === "Backspace") {
+    if (key === 'Backspace') {
         deleteLetter();
         return;
     }
-    if (key === "Enter") {
+    if (key === 'Enter') {
         checkGuess();
         return;
     }
@@ -223,13 +223,13 @@ document.addEventListener("keyup", e => {
     }
 });
 
-document.getElementById("keyboard-cont").addEventListener("click", e => {
-    if (!e.target.classList.contains("keyboard-button")) return;
+document.getElementById('keyboard-cont').addEventListener('click', e => {
+    if (!e.target.classList.contains('keyboard-button')) return;
 
     let key = e.target.textContent;
-    if (key === "Del") key = "Backspace";
+    if (key === 'Del') key = 'Backspace';
 
-    document.dispatchEvent(new KeyboardEvent("keyup", { key }));
+    document.dispatchEvent(new KeyboardEvent('keyup', { key }));
 });
 
 initBoard();
